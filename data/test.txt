@@ -1,0 +1,23 @@
+# vm_count
+7
+
+# band_unitcost
+1
+
+# vm_bandwidth
+4
+3
+5
+2
+4
+3
+5
+
+# vm_storage
+2
+3
+4
+1
+2
+3
+4
