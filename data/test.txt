@@ -1,23 +1,96 @@
 # vm_count
 7
 
+# pm_count
+4
+
+# cluster_count
+2
+
 # band_unitcost
+0.5
+
+# elasticity_lb
+0.2
+
+# vm_mycluster
 1
-
-# vm_bandwidth
-4
-3
-5
-2
-4
-3
-5
-
-# vm_storage
-2
-3
-4
+1
+1
 1
 2
+2
+2
+
+# vm_mypm
+1
+1
+2
+3
 3
 4
+4
+
+# pm_CPUcore
+8
+8
+8
+8
+
+# pm_storage (GB)
+1000
+1000
+1000
+1000
+
+# pm_bw (Mbps)
+10
+10
+10
+10
+
+# vm_CPUuti (%)
+30
+20
+40
+30
+20
+20
+20
+
+# vm_CPUcore
+2
+2
+2
+2
+2
+2
+2
+
+# vm_storage (GB)
+100
+100
+100
+100
+100
+100
+100
+
+# vm_bw (Mbps)
+1
+1
+1
+1
+1
+1
+1
+
+# hop_matrix
+0 2 4 4
+2 0 4 4
+4 4 0 2
+4 4 2 0
+
+# cluster_innerpakage_size (MB)
+1
+2

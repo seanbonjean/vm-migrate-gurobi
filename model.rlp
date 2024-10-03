@@ -1,0 +1,10 @@
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+Minimize
+  2 B0(0) + 3 B1(0) + 4 B2(0) + B3(0) + 2 B4(0) + 3 B5(0) + 4 B6(0)
+   + 26 Constant
+Subject To
+Bounds
+ Constant = 1
+Binaries
+ B0(0) B1(0) B2(0) B3(0) B4(0) B5(0) B6(0)
+End
