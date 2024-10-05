@@ -9,7 +9,7 @@ random.seed(42)
 # P是0或者1,布尔值
 
 
-def run(p_f, p_l, m_b, m_c, mi_lk, P, m, tau, x):
+def run(p_f, p_l, m_b, m_c, mi_lk, P, m, tau, x, cx3, cx4):
     # 定义开始时间
     time_start = time.time()
 
@@ -18,7 +18,7 @@ def run(p_f, p_l, m_b, m_c, mi_lk, P, m, tau, x):
     # ((p_f - p_l) * 1000 * x2 * x1 + p_l + x4 * m_b + x3 * P)
     # + x2 * m_c * (x3 / mi_lk) * P
     # 定义目标函数
-    func = x3 * 20 + x4 * 20 + t * ((p_f - p_l) * 1000 * x2 * x1 + p_l) - log(
+    func = t * ((p_f - p_l) * 1000 * x2 * x1 + p_l + x3 * cx3 + x4 * cx4) - log(
         -(tau - (1 / (6 * m) * (3 + log(1 - 1 / 2 * x1) +
                                 log(1 - 1 / 2 * x2) + log(1 - 1 / 2 * x3)) + 1 / (2 * m) * (
             1 + log(1 - 1 / 2 * x4))))) - log(x1) - log(1 - x1) - log(x2) - log(1 - x2) - log(x3) - \
@@ -131,9 +131,9 @@ def run(p_f, p_l, m_b, m_c, mi_lk, P, m, tau, x):
         # 明确目标函数
         # 迭代停止的控制条件
         iter_cnt = 0
-        while iter_cnt < 10:
+        while iter_cnt < 7:
             iter_cnt += 1
-            print(iter_cnt)
+            # print(iter_cnt)
             J = gradient(x[0, 0], x[1, 0], x[2, 0], x[3, 0], t_value)
             H_1 = inv_hessian(x[0, 0], x[1, 0], x[2, 0], x[3, 0], t_value)
             direction = -np.matmul(H_1, J)
@@ -160,7 +160,7 @@ def run(p_f, p_l, m_b, m_c, mi_lk, P, m, tau, x):
     # * x[2, 0] / mi_lk) * P
     object_function_value = None
 
-    print(rounded_result)
+    # print(rounded_result)
     return rounded_result, object_function_value, consume_time
 
 
@@ -178,7 +178,7 @@ def getE(uc, uo, ur, ub):
     return min([calRmj(i) for i in tmplist])
 
 
-def _calE_star_Ucorb(u_corb):
+def _calE_star_Ucorb(u_corb, cx3, cx4):
     # p_f, p_l, m_b, m_c, mi_lk, P, m, tau
     # p_f = 135  #满负载能耗，random(113，135)
     # p_l = 58.4 #空负载能耗，random(42.3,93.7)
@@ -190,7 +190,7 @@ def _calE_star_Ucorb(u_corb):
     # tau = 0.2  #
     # u_corb          #当时的pm的负载率
     vec = []
-    vec.append(run(125, 60, None, None, None, None, 7, 0.2, u_corb))
+    vec.append(run(125, 60, None, None, None, None, 7, 0.2, u_corb, cx3, cx4))
     # * vec.append(run(random.randint(113, 135), random.randint(
     # * 423, 937)/10,  4, 20000, 1, 1, 16, 0.3, u_corb))  # 返回U和目标函数值和运行时间
     # * vec.append(run(random.randint(113, 135), random.randint(
@@ -210,14 +210,17 @@ def _calE_star_Ucorb(u_corb):
     return getE(retval[0], retval[1], retval[2], retval[3])
 
 
-def calE_star(u_corb):
+def calE_star(u_corb, cx3, cx4):
+    # cx3: x3的系数
     if min(u_corb) < 0.00001:
         return 1
-    print("Now is cal e star")
+    if max(u_corb) > 0.99999:
+        return 0
+    # print("Now is cal e star")
     retval = None
     while retval == None:
         try:
-            retval = _calE_star_Ucorb(u_corb)
+            retval = _calE_star_Ucorb(u_corb, cx3, cx4)
         except TypeError as e:
             pass
     return retval

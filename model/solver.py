@@ -218,8 +218,9 @@ else:
         print(
             f"Ucorb: ({i[0]:.4f}, {i[1]:.4f}, {i[2]:.4f}, {i[3]:.4f})\t\tdelta_bm: ({i[4]:.4f}, {i[5]:.4f})")
     print()
-    for i in solution:
-        print(i)
+    # for i in solution:
+    # print(i)
 
     for i in solution:
-        print(calE_star(i[0:4]))
+        print(calE_star(i[0:4], i[5]/i[2] if i[2] > 0.00001 else i[5]/(i[2] +
+              0.00001), i[4]/i[3] if i[3] > 0.00001 else i[4]/(i[3] + 0.00001)))
