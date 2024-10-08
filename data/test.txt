@@ -8,7 +8,7 @@
 2
 
 # band_unitcost
-50
+25
 
 # elasticity_lb
 0.2

@@ -51,7 +51,7 @@ def cal_hops(vm_num):
         hop = quicksum(gamma[vm_num, j] * d.hop_matrix[(j-1, d.vm_mypm[i]-1)]
                        for j in range(1, d.pm_count + 1))
         total_hop += hop
-    return total_hop / 2  # 两vm间共享同一信道，而此处会被计算2次，因此除以2
+    return total_hop
 
 
 def cal_Rmi(Umi):
